@@ -30,7 +30,8 @@ function setApproach() {
 	const labelsSet = new Set<string>();
 	for (const variant of data.data) {
 		Object.keys(variant).forEach((key) => {
-			if (key !== "__name__") {
+			// if (key !== "__name__") {
+			if (key !== "__name__" && !labelsSet.has(key)) {
 				labelsSet.add(key);
 			}
 		});
