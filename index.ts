@@ -29,12 +29,12 @@ const data = {
 function setApproach() {
 	const labelsSet = new Set<string>();
 	for (const variant of data.data) {
-		Object.keys(variant).forEach((key) => {
+		for (const key of Object.keys(variant)) {
 			// if (key !== "__name__") {
 			if (key !== "__name__" && !labelsSet.has(key)) {
 				labelsSet.add(key);
 			}
-		});
+		}
 	}
 	return Array.from(labelsSet);
 }
@@ -54,20 +54,27 @@ function constApproach() {
 }
 
 function main() {
-	console.log("Starting");
-	let start = new Date().getTime();
-	for (let i = 0; i < 1000000; i++) {
-		setApproach();
+	const original = [...data.data];
+	for (let i = 0; i < 1000; i++) {
+		data.data = data.data.concat(original);
 	}
-	let end = new Date().getTime();
-	console.log("Speed in ms setApproach:", { diff: end - start });
+	console.log(data.data.length);
+
+	console.log("Starting");
 
 	let startB = new Date().getTime();
-	for (let i = 0; i < 1000000; i++) {
+	for (let i = 0; i < 10000; i++) {
 		constApproach();
 	}
 	let endB = new Date().getTime();
 	console.log("Speed in ms const approach:", { diff: endB - startB });
+
+	let start = new Date().getTime();
+	for (let i = 0; i < 10000; i++) {
+		setApproach();
+	}
+	let end = new Date().getTime();
+	console.log("Speed in ms setApproach:", { diff: end - start });
 }
 
 main();
